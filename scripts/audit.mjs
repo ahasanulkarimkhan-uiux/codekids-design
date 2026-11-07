@@ -1,7 +1,10 @@
 import { writeFileSync } from 'node:fs';
 
-const targets = await fetch('http://127.0.0.1:9223/json').then(response => response.json());
-const target = targets.find(item => item.url === 'http://127.0.0.1:4173/');
+const auditUrl = process.argv[2] || 'http://127.0.0.1:4173/';
+const cdpPort = process.env.CODEKIDS_CDP_PORT || '9223';
+const targets = await fetch(`http://127.0.0.1:${cdpPort}/json`).then(response => response.json());
+const normalizedAuditUrl = auditUrl.endsWith('/') ? auditUrl : `${auditUrl}/`;
+const target = targets.find(item => item.url === auditUrl || item.url === normalizedAuditUrl);
 if (!target) throw new Error('CodeKids audit tab not found');
 
 const socket = new WebSocket(target.webSocketDebuggerUrl);
@@ -60,7 +63,8 @@ for (const width of widths) {
   const evaluated = await send('Runtime.evaluate', { expression, returnByValue: true });
   results.push(evaluated.result.value);
   const screenshot = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false, fromSurface: true });
-  writeFileSync(`docs/audit/codekids-${width}.png`, Buffer.from(screenshot.data, 'base64'));
+  const mode = auditUrl.includes('github.io') ? 'live' : 'local';
+  writeFileSync(`docs/audit/codekids-${mode}-${width}.png`, Buffer.from(screenshot.data, 'base64'));
 }
 
 const interactionExpression = `(() => {
@@ -77,3 +81,4 @@ const interactionExpression = `(() => {
 const interaction = await send('Runtime.evaluate', { expression: interactionExpression, returnByValue: true });
 console.log(JSON.stringify({ viewports: results, interaction: interaction.result.value }, null, 2));
 socket.close();
+

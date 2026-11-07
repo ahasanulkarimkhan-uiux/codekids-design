@@ -20,8 +20,9 @@
 
 ## Phase 4: Review
 
-- [ ] **Audit live required viewports**. Source: AGENTS.md six-point checklist. Done when: 1440, 834, 390, 360 and 320 px live DOM results are recorded with stress data and screenshots. Estimate: 90 minutes. (requires: deployment)
-- [ ] **Correct and re-audit critical defects**. Source: live audit. Done when: every squeeze, orphan, clip or overflow defect is fixed, redeployed and re-inspected. Estimate: as found. (requires: live audit)
-- [ ] **Publish verified atomic commit**. Source: approved delivery scope. Done when: repository, commit and GitHub Pages URL resolve and documentation matches the deployed revision. Estimate: 30 minutes. (requires: review pass)
+- [x] **Audit live required viewports**. Source: AGENTS.md six-point checklist. Done when: 1440, 834, 390, 360 and 320 px live DOM results are recorded with stress data and screenshots. Estimate: 90 minutes. (requires: deployment)
+- [x] **Correct and re-audit critical defects**. Source: live audit. Done when: every squeeze, orphan, clip or overflow defect is fixed, redeployed and re-inspected. Estimate: as found. (requires: live audit)
+- [x] **Publish verified atomic commit**. Source: approved delivery scope. Done when: repository, commit and GitHub Pages URL resolve and documentation matches the deployed revision. Estimate: 30 minutes. (requires: review pass)
 
 Independent Foundation tasks could run in parallel after source discovery. Build and Review tasks remain dependency-ordered.
+
